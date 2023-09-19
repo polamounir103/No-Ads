@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Luckiest+Guy&family=Pacifico&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+}
+header {
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(235, 235, 235);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    width: 90%;
+    flex-wrap: nowrap;
+}
+.navbar img {
+    height: 60px;
+    border-radius: 5px;
+
+}
+.navbar h2 {
+    font-size: 20px;
+    line-height: 60px;
+    font-family: 'Pacifico', cursive;
+    font-weight: 800;
+    filter: drop-shadow(0 0 1mm rgb(0, 255, 81));
+
+} 
+/* ***************************** */
+main {
+    position: absolute;
+    top: 125px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 100%;
+    text-align: center;
+    height: 200px;
+    
+}
+main > div {
+    box-shadow: 0 0 10px #00000069;
+    max-width: 90%;
+}
+main div h2 {
+    font-weight: 900;
+    margin: 0 auto 50px auto; 
+    user-select: none ;
+}
+input {
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 20px 1px #50505086;
+    padding: 0 20px;
+}
+button {
+    height: 50px;
+    line-height: 50px;
+    border: none;
+    background-color: rgb(54, 240, 54);
+    color: #fff;
+    font-weight: 800;
+    box-shadow: 0 0 20px 1px #50505086;
+}
+@media ( min-width:769px) {
+    button {
+        width: 150px;
+    }
+}
+@media (max-width: 768px )and ( min-width:244px) {
+    button {
+        width: 50%;
+        margin-top: 20px;
+    }
+}
+
+
+
+textarea {
+    margin-top: 25px;
+    border: none;
+    background: rgb(248, 248, 248);
+    box-shadow: 0 0 20px 1px #50505086;
+    min-height: 50px;
+    max-height: 150px;
+    padding: 20px;
+
+}
+
+.error-img {
+    width: 50%;
+    min-width: 300px;
+    margin-top: -10px;
+}

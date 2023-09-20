@@ -15,6 +15,7 @@ createBtn.addEventListener("click", function(e) {
             let readyLink= readyLinkBox.textContent 
                 // console.log(readyLink)
                 window.open( readyLink , "_blank" )
+                vidLink.value = ""
             }else if(videoLink[i+1] === "s" &&
             videoLink[i] === "?" ){
                 console.log(videoLink[i-11])
@@ -22,8 +23,9 @@ createBtn.addEventListener("click", function(e) {
                 readyLinkBox.textContent = `https://www.youtube-nocookie.com/embed/${newLinkId}?playlist=${newLinkId}&autoplay=1`
                 let readyLink= readyLinkBox.textContent 
                     // console.log(readyLink)
-                    window.open( readyLink , "_blank" )
-            }
+                window.open( readyLink , "_blank" )
+                vidLink.value = ""
+        }
     }
 })
 

@@ -1,34 +1,40 @@
-let vidLink =document.getElementById("vid-link")
-let createBtn = document.getElementById("create-btn")
-let readyLinkBox = document.getElementById("new-link-box")
+let vidLink = document.getElementById("vid-link");
+let createBtn = document.getElementById("create-btn");
+let readyLinkBox = document.getElementById("new-link-box");
 
-createBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    let videoLink = vidLink.value
-    let videoLinkLength = videoLink.length
-    let newLinkId;
-    for (let i = 0; i < videoLinkLength; i++) {
-        if (videoLink[i-1] === "v" && 
-        videoLink[i] === "=" ){
-            newLinkId = videoLink.slice(i+1 , videoLink.length)
-            readyLinkBox.textContent = `https://www.youtube-nocookie.com/embed/${newLinkId}?playlist=${newLinkId}&autoplay=1`
-            let readyLink= readyLinkBox.textContent 
-                // console.log(readyLink)
-                window.open( readyLink , "_blank" )
-                vidLink.value = ""
-            }else if(videoLink[i+1] === "s" &&
-            videoLink[i] === "?" ){
-                console.log(videoLink[i-11])
-                newLinkId = videoLink.slice(i-11 , i)
-                readyLinkBox.textContent = `https://www.youtube-nocookie.com/embed/${newLinkId}?playlist=${newLinkId}&autoplay=1`
-                let readyLink= readyLinkBox.textContent 
-                    // console.log(readyLink)
-                window.open( readyLink , "_blank" )
-                vidLink.value = ""
-        }
+function processVideoLink() {
+  let videoLink = vidLink.value;
+  let newLinkId;
+
+  // Check if the link is a full YouTube link
+  if (videoLink.includes("youtube.com") || videoLink.includes("youtu.be")) {
+    // Extract video ID
+    if (videoLink.includes("youtube.com")) {
+      newLinkId = videoLink.split("v=")[1];
+    } else if (videoLink.includes("youtu.be")) {
+      newLinkId = videoLink.split("/").pop();
     }
-})
+    // Generate embed link
+    let embedLink = `https://www.youtube-nocookie.com/embed/${newLinkId}?playlist=${newLinkId}&autoplay=1`;
+    readyLinkBox.textContent = embedLink;
+    // Open the link in a new tab
+    window.open(embedLink, "_blank");
+    // Clear input
+    vidLink.value = "";
+  } else {
+    // If the link is not a valid YouTube link
+    alert("Please enter a valid YouTube video link.");
+  }
+}
 
+createBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  processVideoLink();
+});
 
-//  https://youtu.be/A3AQVPj7ZNM?si=DGcc8_JAPVoMx49z
-//  https://youtu.be/0QZbzCAcc84?si=C0pm1Fsn5mBoBb3q
+vidLink.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    processVideoLink();
+  }
+});

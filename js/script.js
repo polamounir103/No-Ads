@@ -29,7 +29,27 @@ function processVideoLink() {
 
 createBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  processVideoLink();
+  if (vidLink.value.trim() === "") {
+    // If vidLink is empty, check if there's text in the clipboard
+    navigator.clipboard.readText()
+      .then((text) => {
+        if (text.trim() !== "") {
+          // If clipboard has text, paste it into vidLink
+          vidLink.value = text;
+          processVideoLink(); // Call the function to process the video link
+        } else {
+          // If clipboard is empty, alert the user
+          alert("Please enter a YouTube video link or paste a link from clipboard.");
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to read clipboard contents: ', error);
+        alert("An error occurred while reading clipboard contents. Please enter a YouTube video link manually.");
+      });
+  } else {
+    // If vidLink is not empty, proceed with processing the video link
+    processVideoLink();
+  }
 });
 
 vidLink.addEventListener("keydown", function (e) {

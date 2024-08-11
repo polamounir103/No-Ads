@@ -1,4 +1,4 @@
-let vidLink = document.getElementById("vid-link");
+/* let vidLink = document.getElementById("vid-link");
 let createBtn = document.getElementById("create-btn");
 let readyLinkBox = document.getElementById("new-link-box");
 
@@ -57,4 +57,72 @@ vidLink.addEventListener("keydown", function (e) {
     e.preventDefault();
     processVideoLink();
   }
+});
+*/
+document.addEventListener("DOMContentLoaded", function () {
+  const vidLink = document.getElementById("vid-link");
+  const createBtn = document.getElementById("create-btn");
+  const readyLinkBox = document.getElementById("new-link-box");
+
+  function extractVideoId(url) {
+    try {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.hostname === "www.youtube.com" || parsedUrl.hostname === "youtube.com") {
+        const params = new URLSearchParams(parsedUrl.search);
+        return params.get('v') || null;
+      } else if (parsedUrl.hostname === "youtu.be") {
+        return parsedUrl.pathname.split('/').pop();
+      }
+    } catch (e) {
+      console.error("Invalid URL format:", e);
+    }
+    return null;
+  }
+
+  function processVideoLink() {
+    const videoLink = vidLink.value.trim();
+    if (!videoLink) {
+      alert("Please enter a YouTube video link.");
+      return;
+    }
+
+    const videoId = extractVideoId(videoLink);
+    if (videoId) {
+      const embedLink = `https://www.youtube-nocookie.com/embed/${videoId}?playlist=${videoId}&autoplay=1`;
+      readyLinkBox.textContent = embedLink;
+      window.open(embedLink, "_blank");
+      vidLink.value = ""; // Clear input
+    } else {
+      alert("Please enter a valid YouTube video link.");
+    }
+  }
+
+  function handleCreateBtnClick(e) {
+    e.preventDefault();
+    if (!vidLink.value.trim()) {
+      navigator.clipboard.readText()
+        .then((text) => {
+          if (text.trim()) {
+            vidLink.value = text;
+            processVideoLink();
+          } else {
+            alert("Clipboard is empty. Please enter or paste a valid YouTube video link.");
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to read clipboard contents:", error);
+          alert("Failed to read clipboard contents. Please enter a YouTube video link manually.");
+        });
+    } else {
+      processVideoLink();
+    }
+  }
+
+  createBtn.addEventListener("click", handleCreateBtnClick);
+  vidLink.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      processVideoLink();
+    }
+  });
 });
